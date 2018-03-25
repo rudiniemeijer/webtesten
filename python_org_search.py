@@ -6,5 +6,5 @@ assert "Python" in driver.title
 elem = driver.find_element_by_name("q")
 elem.send_keys("selenium")
 elem.send_keys(Keys.RETURN)
-assert "Google" in driver.title
+assert "Google" in driver.title # this will throw an assert error
 driver.close()
