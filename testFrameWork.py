@@ -14,7 +14,7 @@ from selenium.common.exceptions import TimeoutException
 settings = dict(
     driverpath = './chromedriver',
     baseurl = 'https://www.google.nl',
-    maxviablewaittime = 60
+    maxviablewaittime = 5
 )
 
 # Stuff that needs to go in the fixtures where settings are imported
@@ -31,14 +31,29 @@ class basicTests(unittest.TestCase):
         self.driver.maximize_window()
 
     # This counts as one test, even if there are numerous asserts in this test
-    def testOne(self):
+    def testCheckTitle(self):
         self.assertTrue('Google' in self.driver.title, 'Check, Google appears on page')
-        self.assertFalse(False, 'This one went wrong by design')
-        self.assertTrue(True, 'This one went okay')
 
-    def testTwo(self):
-        print ("Short wait.. "),
-        time.sleep(1)
+    def testSendSearchText(self):
+        try:
+            element = EC.visibility_of_element_located((By.XPATH, '//*[@id="lst-ib"]'))
+            WebDriverWait(self.driver, max_viable_wait_time).until(element)
+        except TimeoutException:
+            self.assertTrue(False, 'Page did not load in time')
+
+        element = self.driver.find_element_by_xpath('//*[@id="lst-ib"]')
+        element.clear()
+        element.send_keys('Python rulez')
+        element.send_keys(Keys.RETURN)
+
+        try:
+            element = EC.visibility_of_element_located((By.XPATH, '//*[@id="resultStats"]'))
+            WebDriverWait(self.driver, max_viable_wait_time).until(element)
+        except TimeoutException:
+            self.assertTrue(False, 'Results did not show in time')
+
+        element = self.driver.find_element_by_xpath('//*[@id="resultStats"]')
+        self.assertTrue('resultaten' in element.text, 'Not the expected response')
 
     # End the session here. More that one test can have run at this time
     def tearDown(self):
@@ -46,8 +61,7 @@ class basicTests(unittest.TestCase):
 
 # Here the actual run-the-tests
 suite = unittest.TestSuite()
-suite.addTest(basicTests('testOne'))
-suite.addTest(basicTests('testTwo'))
+suite.addTest(basicTests('testCheckTitle'))
+suite.addTest(basicTests('testSendSearchText'))
 runner = unittest.TextTestRunner(verbosity = 2)
 result = runner.run(suite)
-
