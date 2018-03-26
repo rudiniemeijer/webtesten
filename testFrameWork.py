@@ -45,7 +45,7 @@ class basicTests(unittest.TestCase):
 
         element = self.driver.find_element_by_xpath('//*[@id="lst-ib"]')
         element.clear()
-        element.send_keys('Python rulez')
+        element.send_keys('YoungCapital rulez')
         element.send_keys(Keys.RETURN)
 
         try:
