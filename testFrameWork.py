@@ -31,7 +31,7 @@ class basicTests(unittest.TestCase):
 
     # This counts as one test, even if there are numerous asserts in this test
     def testCheckTitle(self):
-        self.assertTrue('Google' in self.driver.title, 'Check, Google appears on page')
+        self.assertTrue('Google' in self.driver.title, 'Check, Google appears in the page title')
 
     def testSendSearchText(self):
         try:
@@ -52,7 +52,10 @@ class basicTests(unittest.TestCase):
             self.assertTrue(False, 'Results did not show in time')
 
         element = self.driver.find_element_by_xpath('//*[@id="resultStats"]')
-        self.assertTrue('resultaten' in element.text, 'Not the expected response')
+        response = element.text
+        self.assertTrue('resultaten' in response, 'Not the expected response')
+        responseSet = response.split(' ') # split the response at the spaces
+        print(responseSet[1] + " resultaten .. ")
 
     # End the session here. More that one test can have run at this time
     def tearDown(self):
