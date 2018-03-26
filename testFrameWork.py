@@ -9,6 +9,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import TimeoutException
 
+# In order to move the stuff below in their own files,
+# use from NameOfFile import *, or NameOfFile import class
+
 # Stuff that needs to go in the configuration
 settings = dict(
     driverpath = './chromedriver',
