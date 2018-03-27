@@ -8,6 +8,7 @@ for i in range(25):
     assert "YoungCapital" in driver.title
 
     elem = driver.find_element_by_xpath('//*[@placeholder="Plaatsnaam of postcode"]')
+    elem.clear()
     elem.send_keys("Zwolle")
     knop = driver.find_element_by_xpath('//*[@id="job_opening_search"]/div/div[4]/div[1]/button')
     knop.click()
