@@ -34,7 +34,7 @@ class basicTests(unittest.TestCase):
 
     # This counts as one test, even if there are numerous asserts in this test
     def testCheckTitle(self):
-        self.assertTrue('Google' in self.driver.title, 'Check, Google appears in the page title')
+        self.assertTrue('Google' in self.driver.title, 'Nope, Google does not appear in the page title')
 
     def testSendSearchText(self):
         try:
